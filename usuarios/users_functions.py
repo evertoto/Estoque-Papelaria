@@ -46,7 +46,6 @@ def list_user_ByID(user_ID):
 def login(username, password):
     sql = "SELECT * FROM users WHERE username = ?"
     user = cursor.execute(sql, [username]).fetchone()
-    
     return user and checar_password(password, user[2])
 
 #UPDATE USERNAME BY ID (REFORMULAR IDEIA)
@@ -70,8 +69,9 @@ def update_username_byID(user_ID):
 
 #UPDATE PASSWORD BY ID
 def update_password(password, user_ID):
+    new_password = criptografar(password)
     sql = "UPDATE users SET password = ? WHERE user_ID = ?"
-    cursor.execute( sql , (password, user_ID, ))
+    cursor.execute( sql , (new_password, user_ID, ))
     conexao.commit()
 
 #UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE ATUALIZAR PRODUTOS PELO ID
