@@ -2,16 +2,23 @@ import sqlite3
 from usuarios.users_functions import *
 from produtos.product_functions import *
 from data.settings import create_table_user, create_table_prod
+from tkinter import *
+from screens.login import tela_login
+from screens.products import tela_produtos
 
 #estabelece a conexão com o banco de dados
 conexao = sqlite3.connect('papelaria_db.sqlite')
 #cria o cursor, o intermédio entre o código e o banco de dados
 cursor = conexao.cursor()
 
+#cria as tabelas prod e user
 create_table_prod()
 create_table_user()
 
-#fazer o menu com todas as opções
+#chama a tela de login inteface gráfica
+#tela_login()
+#tela_produtos()
+
 while(True):
     print("""
         1- Cadastrar Usuario
@@ -97,3 +104,6 @@ while(True):
         break
     else:
         print("Entrada Inválida. Tente novamente.")
+
+
+

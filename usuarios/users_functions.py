@@ -48,24 +48,6 @@ def login(username, password):
     user = cursor.execute(sql, [username]).fetchone()
     return user and checar_password(password, user[2])
 
-#UPDATE USERNAME BY ID (REFORMULAR IDEIA)
-def update_username_byID(user_ID):
-    print("\n---Autenticação---")
-    aut_username = str(input("Digite seu username: "))  
-    aut_password = str(input("Digite sua senha: "))  
-    autenticado = login(aut_username, aut_password)
-    if autenticado:
-        new_username = str("Digite o novo username: ")
-        cursor.execute("""
-            UPDATE users SET username = ? WHERE user_ID = ?
-        """, [new_username, user_ID])
-        print("Alteração realizada com sucesso.")
-    else: 
-        print("Acesso Negado.")
-
-#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE ATUALIZAR USERNAME PELO ID
-#new_ID = int(input("Digite o ID do usuário que deseja alterar: "))  
-#update_username_byID(new_ID)
 
 #UPDATE PASSWORD BY ID
 def update_password(password, user_ID):
