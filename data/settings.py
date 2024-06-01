@@ -21,8 +21,7 @@ def create_table_prod():
         CREATE TABLE IF NOT EXISTS products(
         prod_ID INTEGER PRIMARY KEY AUTOINCREMENT,
         prod_name VARCHAR(255) NOT NULL UNIQUE,
-        prod_price INTEGER(255) NOT NULL,
-        prod_stock INTEGER NOT NULL
+        prod_price INTEGER(255) NOT NULL
         );
     """)
 

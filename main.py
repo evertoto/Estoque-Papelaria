@@ -2,23 +2,16 @@ import sqlite3
 from usuarios.users_functions import *
 from produtos.product_functions import *
 from data.settings import create_table_user, create_table_prod
-from tkinter import *
-from screens.login import tela_login
-from screens.products import tela_produtos
 
 #estabelece a conexão com o banco de dados
 conexao = sqlite3.connect('papelaria_db.sqlite')
 #cria o cursor, o intermédio entre o código e o banco de dados
 cursor = conexao.cursor()
 
-#cria as tabelas prod e user
 create_table_prod()
 create_table_user()
 
-#chama a tela de login inteface gráfica
-#tela_login()
-#tela_produtos()
-
+#fazer o menu com todas as opções
 while(True):
     print("""
         1- Cadastrar Usuario
@@ -71,13 +64,11 @@ while(True):
         list_user()
         user_id = int(input("Qual o ID do usuario que deseja excluir? "))
         remove_user(user_id) 
-        print("Usuario excluido com sucesso")
 
     elif opc == 7:
         new_product = str(input("Digite o nome do produto: "))
         new_price = float(input("Digite o preço do produto: "))
         insert_product(new_product, new_price)
-        print("Produto inserido com sucesso")
 
     elif opc == 8:
         list_products()
@@ -90,20 +81,15 @@ while(True):
         list_products()
         new_ID = int(input("Digite o ID do produto que deseja alterar: ")) 
         new_name = str(input("Digite o novo nome do produto: "))  
-        new_price = int(input("Digite o novo preço do produto: "))
-        print("Produto Atualizado:")
+        new_price = int(input("Digite o novo preço do produto: "))  
         update_product_ByID(new_name, new_price, new_ID)
 
     elif opc == 11:
         list_products()
         prod_id = int(input("Qual o id do produto no qual deseja a exclusão:"))
-        print("Produto Excluido com sucesso")
         remove_product(prod_id)
 
     elif opc == 0:
         break
     else:
         print("Entrada Inválida. Tente novamente.")
-
-
-
