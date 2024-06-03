@@ -10,6 +10,7 @@ def insert_product(name, price):
         INSERT INTO products(prod_name, prod_price) VALUES (?, ?)
     """, [name, price])
     conexao.commit()
+    return cursor.lastrowid  # Return the ID of the last inserted row
 
 #UTILIZAR PARA ALIMENTAR A FUNÇÃO E CHAMAR NO ARQUIVO MAIN
 #new_product = str(input("Digite seu email: "))
@@ -56,3 +57,10 @@ def remove_product (prod_ID):
     cursor.execute( sql , (prod_ID, ))
     conexao.commit()
     list_products()
+
+def insert_product_for_user(user_ID, prod_ID):
+    cursor.execute("""
+        INSERT INTO user_product (user_ID, prod_ID)
+        VALUES (?, ?)
+    """, (user_ID, prod_ID))
+    conexao.commit()

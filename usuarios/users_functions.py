@@ -1,5 +1,6 @@
 import sqlite3
 import bcrypt
+user = ''
 
 #estabelece a conexão com o banco de dados
 conexao = sqlite3.connect('papelaria_db.sqlite')
@@ -94,3 +95,15 @@ def criptografar(password):
 def checar_password(password, hashed):
     bytes = password.encode('utf-8')
     return bcrypt.checkpw(bytes, hashed)
+
+def get_auth_user():
+    return user
+
+def set_user_logged_in(cursor, username):
+    global user
+    # Obtém o usuário pelo nome de usuário fornecido
+    cursor.execute("""
+        SELECT * FROM users WHERE username = ?
+    """, (username,))
+    user = cursor.fetchone()
+    print(user[0])

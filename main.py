@@ -1,7 +1,7 @@
 import sqlite3
 from usuarios.users_functions import *
 from produtos.product_functions import *
-from data.settings import create_table_user, create_table_prod
+from data.settings import *
 
 #estabelece a conexão com o banco de dados
 conexao = sqlite3.connect('papelaria_db.sqlite')
@@ -10,7 +10,25 @@ cursor = conexao.cursor()
 
 create_table_prod()
 create_table_user()
+create_table_prod_user()
 
+def get_user_id(username):
+    cursor.execute("SELECT user_id FROM users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    if user:
+        return user[0]
+    else:
+        return None
+
+username = str(input("Digite o username: "))
+password = str(input("Digite a senha: "))
+user_id = get_user_id(username)
+autenticado = login(username, password)
+set_user_logged_in(cursor, username)
+if autenticado:
+    print("Usuário autenticado")
+else:
+    print("Usuário ou senha incorreto(s), por favor tente novamente.")
 #fazer o menu com todas as opções
 while(True):
     print("""
@@ -37,15 +55,6 @@ while(True):
         username = str(input("Digite o username: "))
         password = str(input("Digite a senha: "))
         insert_user(username, password)
-    
-    elif opc == 2:
-        username = str(input("Digite o username: "))
-        password = str(input("Digite a senha: "))
-        autenticado = login(username, password)
-        if autenticado:
-            print("Usuário autenticado")
-        else:
-            print("Usuário ou senha incorreto(s), por favor tente novamente.")
 
     elif opc == 3:
         list_user()
@@ -68,8 +77,11 @@ while(True):
     elif opc == 7:
         new_product = str(input("Digite o nome do produto: "))
         new_price = float(input("Digite o preço do produto: "))
-        insert_product(new_product, new_price)
-
+        productID =  insert_product(new_product, new_price)
+        user = get_auth_user()
+        print(user)
+        insert_product_for_user(user[0], productID)
+       
     elif opc == 8:
         list_products()
     
