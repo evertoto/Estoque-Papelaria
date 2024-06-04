@@ -106,4 +106,11 @@ def set_user_logged_in(cursor, username):
         SELECT * FROM users WHERE username = ?
     """, (username,))
     user = cursor.fetchone()
-    print(user[0])
+
+def get_user_id(username):
+    cursor.execute("SELECT user_id FROM users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    if user:
+        return user[0]
+    else:
+        return None
