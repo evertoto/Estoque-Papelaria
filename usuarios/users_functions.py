@@ -52,8 +52,9 @@ def list_user_ByID(user_ID):
 def update_password(password, user_ID):
     conexao = sqlite3.connect('papelaria_db.sqlite')
     cursor = conexao.cursor()
+    cript_password = criptografar(password)
     sql = "UPDATE users SET password = ? WHERE user_ID = ?"
-    cursor.execute( sql , (password, user_ID, ))
+    cursor.execute( sql , (cript_password, user_ID, ))
     conexao.commit()
     conexao.close()
 
@@ -90,7 +91,6 @@ def get_auth_user():
 
 def set_user_logged_in(cursor, username):
     global user
-    # Obtém o usuário pelo nome de usuário fornecido
     cursor.execute("""
         SELECT * FROM users WHERE username = ?
     """, (username,))

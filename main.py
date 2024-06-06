@@ -70,7 +70,6 @@ if username != 'admin':
         new_price = float(input("Digite o preço do produto: "))
         productID =  insert_product(new_product, new_price)
         user = get_auth_user()
-        print(user)
         insert_product_for_user(user[0], productID)
        
     elif opc == 2:
