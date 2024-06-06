@@ -13,23 +13,34 @@ create_table_prod()
 create_table_user()
 create_table_prod_user()
 
-print("""
-      Seja bem vindo ao estoque da papelaria Papel&Cia
-      """)
-
 while(True):
+    print("""
+      Seja bem vindo ao estoque da papelaria Papel&Cia
+      
+        1- Cadastrar Usuário
+        2- Autenticar Login
+      """)
+    opc = int(input("Digite a opção: "))
+    if opc == 1: #cadastro
+        username = str(input("Digite o username: "))
+        password = str(input("Digite a senha: "))
+        insert_user(username, password)
 
- username = str(input("Digite o usuario: "))
- password = str(input("Digite a senha: "))
- user_id = get_user_id(username)
- autenticado = login(username, password)
- set_user_logged_in(cursor, username)
- if autenticado:
-    print("Usuário autenticado")
-    break
- else:
-    print("Usuário ou senha incorreto(s), por favor tente novamente.")
-  
+    elif opc ==2: #login
+        username = str(input("Digite o usuario: "))
+        password = str(input("Digite a senha: "))
+        user_id = get_user_id(username)
+        autenticado = login(username, password)
+        set_user_logged_in(cursor, username)
+        if autenticado:
+            print("Usuário autenticado")
+            break
+        else:
+            print("Usuário ou senha incorreto(s), por favor tente novamente.")
+    else:
+        print("Entrada Inválida, tente novamente.")
+        continue
+    
 if username != 'admin':              
 #fazer o menu com todas as opções
  while(True):
@@ -47,7 +58,7 @@ if username != 'admin':
         
         5- Excluir Produto
           
-        0- Encerrar programa
+        0- Encerrar Programa
           
     -----------------------------------
           
@@ -80,6 +91,11 @@ if username != 'admin':
         list_products()
         prod_id = int(input("Qual o id do produto no qual deseja a exclusão:"))
         remove_product(prod_id)
+
+    elif opc == 6:
+        prod_name = str(input("Digite o nome do produto que quer selecionar: "))
+        list_product_by_name(prod_name)
+
 
     elif opc == 0:
         break
@@ -128,6 +144,7 @@ else:
         list_user_ByID(new_ID)
     
     elif opc == 4:
+        list_user()
         user_ID = int(input("Qual é o seu ID?  "))
         password = str(input("Qual será a nova senha?  "))
         update_password(password, user_ID)
